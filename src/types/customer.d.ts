@@ -15,7 +15,7 @@ export interface CustomerDetails {
 };
 
 interface HandleCustomerChange<K extends keyof CustomerDetails = keyof CustomerDetails> {
-    type: "HandleCustomerChange";
+    type: "HANDLE_CUSTOMER_CHANGE";
     payload: {
         name: K;
         value: CustomerDetails[k]

@@ -1,8 +1,8 @@
 import { useSelector, useDispatch } from "react-redux";
-import { getCustomerProductList } from "../utils/helper";
-import type { RootStore } from "../stores/store";
+import { getCustomerProductList } from "../../utils/helper";
+import type { RootStore } from "../../stores/store";
 import type React from "react";
-import { handleCustomerChangeAction } from "../actions/customerActions";
+import { handleCustomerChangeAction } from "../../actions/customerActions";
 
 const CustomerPage = () => {
     const dispatch = useDispatch();

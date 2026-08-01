@@ -1,27 +1,29 @@
+import { HANDLE_ADD_PRODUCT, HANDLE_ITEM_CHANGE, HANDLE_LOT_FETCH, HANDLE_PRODUCT_ERROR, HANDLE_REMOVE_PRODUCT, HANDLE_WAREHOUSE_CHANGE } from "../constants/productActionEvents";
 import type { ProductReducerAction, ProductReducerState } from "../types/product";
 import { calculateDiscount, getDefaultProductError, getDefaultState } from "../utils/helper";
 
 const key = crypto.randomUUID();
+
 const initialProductState: ProductReducerState = {
     products: [getDefaultState(key)],
     products_err: [getDefaultProductError(key)]
 };
 
 const ProducerReducer = (state = initialProductState, action: ProductReducerAction): ProductReducerState => {
-    if (action.type === 'HANDLE_ADD_PRODUCT') {
+    if (action.type === HANDLE_ADD_PRODUCT) {
         const key = crypto.randomUUID();
         return {
             ...state,
             products: [...state.products, getDefaultState(key)],
             products_err: [...state.products_err, getDefaultProductError(key)]
         };
-    } else if (action.type === "HANDLE_REMOVE_PRODUCT") {
+    } else if (action.type === HANDLE_REMOVE_PRODUCT) {
         return {
             ...state,
             products: state.products.filter((product) => product.key !== action.payload.product_key),
             products_err: state.products_err.filter((product) => product.key !== action.payload.product_key),
         }
-    } else if (action.type === "HANDLE_ITEM_CHANGE") {
+    } else if (action.type === HANDLE_ITEM_CHANGE) {
         return {
             ...state,
             products: state.products.map((product) => {
@@ -47,7 +49,7 @@ const ProducerReducer = (state = initialProductState, action: ProductReducerActi
                 }
             })
         };
-    } else if (action.type === "HANDLE_WAREHOUSE_CHANGE") {
+    } else if (action.type === HANDLE_WAREHOUSE_CHANGE) {
         return {
             ...state,
             products: state.products.map((product) => {
@@ -67,7 +69,7 @@ const ProducerReducer = (state = initialProductState, action: ProductReducerActi
                 }
             })
         };
-    } else if (action.type === "HANDLE_LOT_FETCH") {
+    } else if (action.type === HANDLE_LOT_FETCH) {
         return {
             ...state,
             products: state.products.map((product) => {
@@ -80,7 +82,7 @@ const ProducerReducer = (state = initialProductState, action: ProductReducerActi
                 }
             })
         };
-    } else if (action.type === "HANDLE_PRODUCT_ERROR") {
+    } else if (action.type === HANDLE_PRODUCT_ERROR) {
         return {
             ...state,
             products_err: [...action.payload.errors]
