@@ -2,12 +2,12 @@ import { useSelector, useDispatch } from "react-redux";
 import CustomerPage from "./CustomerPage";
 import ProductPage from "./ProductPage";
 import Summary from "./Summary";
-import type { RootStore } from "../stores/store";
+import type { RootStore } from "../../stores/store";
 import { useMemo } from "react";
-import type { CustomerDetails } from "../types/customer";
-import type { ProductError } from "../types/product";
-import { handleCustomerError } from "../actions/customerActions";
-import { handleProductError } from "../actions/productActions";
+import type { CustomerDetails } from "../../types/customer";
+import type { ProductError } from "../../types/product";
+import { handleCustomerError } from "../../actions/customerActions";
+import { handleProductError } from "../../actions/productActions";
 
 const ReduxHome = () => {
     let dispatch = useDispatch();

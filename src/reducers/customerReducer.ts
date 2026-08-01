@@ -1,3 +1,4 @@
+import { HANDLE_CUSTOMER_CHANGE, HANDLE_CUSTOMER_ERROR } from "../constants/customerActionEvents";
 import type { CustomerDetails, CustomerReducerPayLoad } from "../types/customer";
 
 const initalCustomerState: CustomerDetails = {
@@ -15,7 +16,7 @@ const initalCustomerState: CustomerDetails = {
 };
 
 const CustomerReducer = (state = initalCustomerState, action: CustomerReducerPayLoad): CustomerDetails => {
-    if (action.type === "HandleCustomerChange") {
+    if (action.type === HANDLE_CUSTOMER_CHANGE) {
         return {
             ...state,
             customer_details: {
@@ -27,7 +28,7 @@ const CustomerReducer = (state = initalCustomerState, action: CustomerReducerPay
                 [action.payload.name + "_err"]: ""
             }
         }
-    } else if (action.type === "HANDLE_CUSTOMER_ERROR") {
+    } else if (action.type === HANDLE_CUSTOMER_ERROR) {
         return {
             ...state,
             customer_details_error: {

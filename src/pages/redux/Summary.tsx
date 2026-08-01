@@ -1,4 +1,4 @@
-import type { SummaryProps } from "../types/product";
+import type { SummaryProps } from "../../types/product";
 
 const Summary = ({ summary, onPlaceOrder }: SummaryProps) => {
     return (

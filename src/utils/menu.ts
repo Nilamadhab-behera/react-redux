@@ -1,4 +1,9 @@
-import type { MenuProps } from "../types/basics";
+
+interface MenuProps {
+    key: string;
+    label: string;
+    link: string
+};
 
 export const menuList: MenuProps[] = [
     {

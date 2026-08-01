@@ -1,9 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
-import type { RootStore } from "../stores/store";
-import { handleAddProduct, handleItemChange, handleRemoveProduct, handleSetLotDetails, handleWarehouseChange } from "../actions/productActions";
+import type { RootStore } from "../../stores/store";
+import { handleAddProduct, handleItemChange, handleRemoveProduct, handleSetLotDetails, handleWarehouseChange } from "../../actions/productActions";
 import type React from "react";
-import type { ProductDetails } from "../types/product";
-import { fetchLotDetails, getWarehouseDetails } from "../utils/helper";
+import type { ProductDetails } from "../../types/product";
+import { fetchLotDetails, getWarehouseDetails } from "../../utils/helper";
 
 const ProductPage = () => {
     const dispatch = useDispatch();
