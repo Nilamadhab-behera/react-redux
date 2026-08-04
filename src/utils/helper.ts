@@ -34,7 +34,9 @@ export const getWarehouseDetails = (): Array<{ id: number; name: string }> => {
 
 export const fetchLotDetails = async (warehouse_id: number): Promise<{ value: number; label: string }[]> => {
     try {
-        await new Promise((resolve) => setTimeout(resolve, 2000));
+        if(warehouse_id === 2) throw new Error("Failed To Fecth Lots");
+        // Give A Small Delay For Look Like Api Call
+        await new Promise((resolve) => setTimeout(resolve, 800));
 
         let lotDetails: Record<number, { value: number, label: string }[]> = {
             1: [{ value: 1, label: "Lot-1" }, { value: 2, label: "Lot-2" }],
@@ -44,7 +46,7 @@ export const fetchLotDetails = async (warehouse_id: number): Promise<{ value: nu
 
         return lotDetails[warehouse_id];
     } catch (error) {
-        return [];
+        throw error;
     }
 };
 

@@ -1,9 +1,10 @@
 import { useSelector, useDispatch } from "react-redux";
 import type { RootStore } from "../../stores/store";
-import { handleAddProduct, handleItemChange, handleRemoveProduct, handleSetLotDetails, handleWarehouseChange } from "../../actions/productActions";
+import { handleAddProduct, handleItemChange, handleRemoveProduct, handleWarehouseChange } from "../../actions/productActions";
 import type React from "react";
 import type { ProductDetails } from "../../types/product";
-import { fetchLotDetails, getWarehouseDetails } from "../../utils/helper";
+import { getWarehouseDetails } from "../../utils/helper";
+import { fetchLots } from "../../thunk/productThunk";
 
 const ProductPage = () => {
     const dispatch = useDispatch();
@@ -37,9 +38,12 @@ const ProductPage = () => {
             dispatch(handleWarehouseChange(key, name, value));
         };
 
-        let lotDetails = await fetchLotDetails(Number(value));
+        // Calling Thunk
+        dispatch(fetchLots(key, Number(value)));
 
-        dispatch(handleSetLotDetails(key, 'product_lots', lotDetails));
+        // let lotDetails = await fetchLotDetails(Number(value));
+
+        // dispatch(handleSetLotDetails(key, 'product_lots', lotDetails));
     };
 
     return (
@@ -80,7 +84,7 @@ const ProductPage = () => {
                     </thead>
 
                     <tbody>
-                        {products.map((product, index) => (
+                        {products.map((product) => (
                             <tr key={product.key} className="hover:bg-gray-50">
                                 {/* Product Name */}
                                 <td className="border-b p-2">
@@ -91,7 +95,7 @@ const ProductPage = () => {
                                         onChange={(e) => dispatch(handleItemChange(product.key, 'product_name', e.target.value))}
                                     />
                                     <span className="mt-1 block text-xs text-red-500">
-                                        {productsErr[index]?.product_name_err}
+                                        {productsErr.find((productErr) => productErr.key === product.key)?.product_lot_err ?? ""}
                                     </span>
                                 </td>
 
@@ -110,7 +114,7 @@ const ProductPage = () => {
                                         }
                                     </select>
                                     <span className="mt-1 block text-xs text-red-500">
-                                        {productsErr[index]?.product_warehouse_err}
+                                        {productsErr.find((productErr) => productErr.key === product.key)?.product_warehouse_err ?? ""}
                                     </span>
                                 </td>
 
@@ -138,7 +142,10 @@ const ProductPage = () => {
                                     </select>
 
                                     <span className="mt-1 block text-xs text-red-500">
-                                        {productsErr[index]?.product_lot_err}
+                                        {productsErr.find((productErr) => productErr.key === product.key)?.product_lot_err ?? ""}
+                                    </span>
+                                    <span className="mt-1 block text-xs text-red-500">
+                                        {product.product_lot_error}
                                     </span>
                                 </td>
 
@@ -152,7 +159,7 @@ const ProductPage = () => {
                                     />
 
                                     <span className="mt-1 block text-xs text-red-500">
-                                        {productsErr[index]?.product_qty_err}
+                                        {productsErr.find((productErr) => productErr.key === product.key)?.product_qty_err ?? ""}
                                     </span>
                                 </td>
 
@@ -166,7 +173,7 @@ const ProductPage = () => {
                                     />
 
                                     <span className="mt-1 block text-xs text-red-500">
-                                        {productsErr[index]?.product_rate_err}
+                                        {productsErr.find((productErr) => productErr.key === product.key)?.product_rate_err ?? ""}
                                     </span>
                                 </td>
 

@@ -15,5 +15,10 @@ export const menuList: MenuProps[] = [
         key: "redux",
         label: "Redux",
         link: '/redux-learning'
+    },
+    {
+        key: 'redux_thunk',
+        label: 'Redux Thunk',
+        link: '/redux-thunk'
     }
 ];

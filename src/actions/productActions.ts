@@ -1,4 +1,4 @@
-import { HANDLE_ADD_PRODUCT, HANDLE_ITEM_CHANGE, HANDLE_LOT_FETCH, HANDLE_REMOVE_PRODUCT, HANDLE_WAREHOUSE_CHANGE } from "../constants/productActionEvents";
+import { HANDLE_ADD_PRODUCT, HANDLE_ITEM_CHANGE, HANDLE_LOT_FETCH_FAILURE, HANDLE_LOT_FETCH_SUCCESS, HANDLE_REMOVE_PRODUCT, HANDLE_WAREHOUSE_CHANGE } from "../constants/productActionEvents";
 import type { ProductDetails, ProductError } from "../types/product";
 
 export const handleAddProduct = () => {
@@ -18,7 +18,7 @@ export const handleItemChange = <T extends keyof ProductDetails>(key: string, na
     return {
         type: HANDLE_ITEM_CHANGE,
         payload: { product_key: key, name, value }
-    }
+    };
 };
 
 export const handleWarehouseChange = <T extends keyof ProductDetails>(key: string, name: T, value: ProductDetails[T]) => {
@@ -30,11 +30,17 @@ export const handleWarehouseChange = <T extends keyof ProductDetails>(key: strin
 
 export const handleSetLotDetails = <T extends keyof ProductDetails>(key: string, name: T, lots: Array<{ value: number; label: string }>) => {
     return {
-        type: HANDLE_LOT_FETCH,
+        type: HANDLE_LOT_FETCH_SUCCESS,
         payload: { product_key: key, name, value: lots }
-    }
+    };
 };
 
+export const handleLotFailedFailure = (productKey: string, error: string) => {
+    return {
+        type: HANDLE_LOT_FETCH_FAILURE,
+        payload: { product_key: productKey, error: error }
+    };
+};
 
 export const handleProductError = (product_error: ProductError[]) => {
     return {
@@ -42,5 +48,5 @@ export const handleProductError = (product_error: ProductError[]) => {
         payload: {
             errors: product_error
         }
-    }
-}
+    };
+};
