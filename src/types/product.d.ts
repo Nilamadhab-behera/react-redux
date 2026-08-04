@@ -10,7 +10,8 @@ export interface ProductDetails {
     product_discount_type: 'flat' | 'percent';
     product_discount_percent: number;
     product_discount_value: number;
-    product_loading?: boolean
+    product_loading?: boolean;
+    product_lot_error?: string;
 };
 
 export interface ProductError {
@@ -50,10 +51,15 @@ interface HandleWarehouseChange {
     payload: { product_key: string; name: string; value: number }
 };
 
-interface HandleFetchLots {
-    type: 'HANDLE_LOT_FETCH',
+interface HandleFetchLotSuccess {
+    type: 'HANDLE_LOT_FETCH_SUCCESS',
     payload: { product_key: string; name: string; value: Array<{ valie: number; label: string }> };
 };
+
+interface HandleFetchLotFailure {
+    type: 'HANDLE_LOT_FETCH_FAILURE',
+    payload: { product_key: string; error: string }
+}
 
 interface HandleProductError {
     type: "HANDLE_PRODUCT_ERROR";
@@ -62,7 +68,7 @@ interface HandleProductError {
     };
 }
 
-export type ProductReducerAction = HandleAddProduct | HandleRemoveProduct | HandleItemChange | HandleWarehouseChange | HandleFetchLots | HandleProductError;
+export type ProductReducerAction = HandleAddProduct | HandleRemoveProduct | HandleItemChange | HandleWarehouseChange | HandleFetchLotSuccess | HandleFetchLotFailure | HandleProductError;
 
 export interface SummaryProps {
     summary: {

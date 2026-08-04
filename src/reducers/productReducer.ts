@@ -1,4 +1,4 @@
-import { HANDLE_ADD_PRODUCT, HANDLE_ITEM_CHANGE, HANDLE_LOT_FETCH, HANDLE_PRODUCT_ERROR, HANDLE_REMOVE_PRODUCT, HANDLE_WAREHOUSE_CHANGE } from "../constants/productActionEvents";
+import { HANDLE_ADD_PRODUCT, HANDLE_ITEM_CHANGE, HANDLE_LOT_FETCH_FAILURE, HANDLE_LOT_FETCH_SUCCESS, HANDLE_PRODUCT_ERROR, HANDLE_REMOVE_PRODUCT, HANDLE_WAREHOUSE_CHANGE } from "../constants/productActionEvents";
 import type { ProductReducerAction, ProductReducerState } from "../types/product";
 import { calculateDiscount, getDefaultProductError, getDefaultState } from "../utils/helper";
 
@@ -59,6 +59,7 @@ const ProducerReducer = (state = initialProductState, action: ProductReducerActi
                     ...product,
                     [action.payload.name]: action.payload.value,
                     product_loading: true,
+                    product_lot_error: ''
                 }
             }),
             products_err: state.products_err.map((product) => {
@@ -69,7 +70,7 @@ const ProducerReducer = (state = initialProductState, action: ProductReducerActi
                 }
             })
         };
-    } else if (action.type === HANDLE_LOT_FETCH) {
+    } else if (action.type === HANDLE_LOT_FETCH_SUCCESS) {
         return {
             ...state,
             products: state.products.map((product) => {
@@ -79,9 +80,24 @@ const ProducerReducer = (state = initialProductState, action: ProductReducerActi
                     ...product,
                     [action.payload.name]: action.payload.value,
                     product_loading: false,
+                    product_lot_error: ''
                 }
             })
         };
+    } else if (action.type === HANDLE_LOT_FETCH_FAILURE) {
+        return {
+            ...state,
+            products: state.products.map((product) => {
+                if(product.key !== action.payload.product_key) return product;
+
+                return {
+                    ...product,
+                    product_loading: false,
+                    product_lots: [],
+                    product_lot_error: action.payload.error
+                }
+            })
+        }
     } else if (action.type === HANDLE_PRODUCT_ERROR) {
         return {
             ...state,
