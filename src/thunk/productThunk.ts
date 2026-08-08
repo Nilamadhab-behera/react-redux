@@ -8,6 +8,6 @@ export const fetchLots = (product_key: string, warehouseId: number) => {
             dispatch(handleSetLotDetails(product_key, 'product_lots', lotDetails));
         } catch (error: any) {
             dispatch(handleLotFailedFailure(product_key, error.message));
-        }
+        };
     };
 };
